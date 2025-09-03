@@ -1,6 +1,5 @@
 import Fastify from 'fastify';
 import helmet from '@fastify/helmet';
-import cors from '@fastify/cors';
 import dotenv from 'dotenv';
 import axios from 'axios';
 import { z } from 'zod';
@@ -9,10 +8,6 @@ const server = Fastify({
     logger: true
 });
 await server.register(helmet);
-await server.register(cors, {
-    origin: true,
-    methods: ['GET', 'POST', 'OPTIONS']
-});
 const PAYPER_CHECKOUT_URL = process.env.PAYPER_CHECKOUT_URL || 'https://checkout-staging.payper.ca/api/v2/checkout-session';
 const QuerySchema = z.object({
     amount: z.string().transform((v) => Number(v)).refine((v) => !Number.isNaN(v) && v > 0, 'amount must be a positive number'),
