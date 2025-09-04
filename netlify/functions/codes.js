@@ -29,6 +29,7 @@ exports.handler = async (event) => {
   const amount = Number(body.amount);
   const product = body.product || 'Holland Deposit';
   const currency = (body.currency || 'CAD').toUpperCase();
+  const token = body.token || null; // optional per-code token
   const allowAmountOverride = !!body.allow_amount_override;
   const code = body.code || randomCode(8);
 
@@ -41,6 +42,7 @@ exports.handler = async (event) => {
     product,
     currency,
     allow_amount_override: allowAmountOverride,
+    token, // stored if provided
     usage_count: 0,
     created_at: Date.now(),
   };

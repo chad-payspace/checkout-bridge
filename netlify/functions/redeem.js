@@ -29,7 +29,8 @@ exports.handler = async (event) => {
       if (!Number.isNaN(override) && override > 0) amount = override;
     }
 
-    const bearer = extractBearer(process.env.PAYPER_TOKEN, qs.token);
+    // Prefer code-level token; else query token; else env PAYPER_TOKEN
+    const bearer = extractBearer(process.env.PAYPER_TOKEN, config.token || qs.token);
     if (!bearer) {
       return { statusCode: 401, body: JSON.stringify({ error: 'missing_token' }) };
     }
