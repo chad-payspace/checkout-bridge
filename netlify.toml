@@ -1,0 +1,9 @@
+[build]
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/c/*"
+  to = "/.netlify/functions/redeem?code=:splat"
+  status = 200
+
+
